@@ -1,0 +1,9 @@
+name: stackato-assist
+
+mem: 128
+
+framework:
+  type: node
+
+ignores: ['node_modules']
+

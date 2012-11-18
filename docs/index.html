@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><title>README</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="./docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="./index.html" class="source"><span class="file_name">README</span></a><a href="./test/lib/index.js.html" class="source "><span class="base_path">test / lib / </span><span class="file_name">index.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"></th><th class="code"></th></tr></thead><tbody><tr id="section"><td class="docs"><h1>stackato-assist
+</h1><p>A utility library for easy assistance in getting your node app running on Stackato.</p><h3>Version</h3><p>0.0.1</p><h3>Author</h3><p>Jamie Paton</p><h3>Dependencies </h3><ul></ul><p><h3>Stats</h3><pre class="code_stats">
+http://cloc.sourceforge.net v 1.55  T=0.5 s (2.0 files/s, 112.0 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Javascript                       1             14              6             36
+-------------------------------------------------------------------------------
+</pre></p></td><td id="content" class="code"><h1>Stackato-Assist</h1>
+
+<h2>A helper utility for running your app on Stackato</h2>
+
+<h2>Install</h2>
+
+<pre><code>npm install stackato-assist
+</code></pre>
+
+<p>or add to your package.json dependencies.</p>
+
+<h2>Usage</h2>
+
+<pre><code>var stackato = require('stackato-assist');
+
+if(stackato.isStackato){
+
+  // Basic App settings
+  // ------------------
+  // listen port
+  stackato.port
+
+  // instance id
+  stackato.instance_id
+
+  // application host IP
+  stackato.host
+
+  // sudo enabled
+  stackato.sudo
+
+  // Registered application URIs
+  for(uri in stackato.app.uris){
+    console.log(stackato.uris[uri]);
+  }
+
+  // User / Groups
+  /---------------
+
+  // Users who have access to this app
+  for(user in stackato.app.users){
+    console.log(stackato.users[user]);
+  }
+
+  // Group for this app
+  stackato.app.group
+
+  // Database services
+  //------------------
+
+  // true / false
+  stackato.hasMongoDB
+  stackato.hasRedis
+  stackato.hasMySQL
+  stackato.hasPostgreSQL
+
+  // Persistent Filesystem service
+  stackato.hasFileSystem // true/false
+  stackato.fileSystemPath // /path/to/fs
+
+
+
+}
+</code></pre>  </td></tr></tbody></table><div id="generated">generated Sat Nov 17 2012 19:17:56 GMT-0800 (PST)  </div><div id="projectname"><a href="./index.html">Stackato-Assist</a></div></div></body></html>

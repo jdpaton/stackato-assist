@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 Stackato Assist Tests
+
+  h2 This app is running on Stackato
+
+  - if (stackato.isStackato)
+    h2 Name
+    h4= stackato.app.name
+
+    h2 Instance ID
+    h4= stackato.instance_id
+
+    h2 Application URIs
+    - if (stackato.app.uris)
+      p= stackato.app.uris
+
+    h3 Services (#{stackato.services.length})
+
+  - else
+    h2 This app is not running on Stackato
+

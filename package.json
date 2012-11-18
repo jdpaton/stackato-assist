@@ -1,0 +1,26 @@
+{
+  "name": "stackato-assist",
+  "version": "0.0.1",
+  "description": "A utility library for easy assistance in getting your node app running on Stackato.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/jdpaton/stackato-assist.git",
+  "homepage": "https://github.com/jdpaton/stackato-assist",
+  "keywords": [
+    "Stackato",
+    "PaaS",
+    "platform"
+  ],
+  "author": "Jamie Paton",
+  "docco_husky": {
+    "project_name": "Stackato-Assist",
+    "show_timestamp": true
+}
+}
