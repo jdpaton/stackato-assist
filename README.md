@@ -15,6 +15,7 @@ or add to your package.json dependencies.
 
       // Basic App settings
       // ------------------
+
       // listen port
       stackato.port
 
@@ -33,7 +34,7 @@ or add to your package.json dependencies.
       }
 
       // User / Groups
-      /---------------
+      // --------------
 
       // Users who have access to this app
       for(user in stackato.app.users){
@@ -44,7 +45,7 @@ or add to your package.json dependencies.
       stackato.app.group
 
       // Database services
-      //------------------
+      // -----------------
 
       // true / false
       stackato.hasMongoDB
@@ -53,10 +54,12 @@ or add to your package.json dependencies.
       stackato.hasPostgreSQL
 
       // Persistent Filesystem service
+      // -----------------------------
       stackato.hasFileSystem // true/false
       stackato.fileSystemPath // /path/to/fs
 
       // MongoDB connection helper
+      // -------------------------
       stackato.connectMongoDB('serviceName', function(err, client){
         //client.collection(...)
       });
