@@ -20,7 +20,7 @@ or add to your package.json dependencies.
       stackato.port
 
       // instance id
-      stackato.instance_id
+      stackato.instanceID
 
       // application host IP
       stackato.host
