@@ -1,5 +1,5 @@
 # Stackato-Assist
-## A helper utility for running your app on Stackato
+## A utility library for easy assistance in getting your node app running on Stackato.
 
 ## Install
 

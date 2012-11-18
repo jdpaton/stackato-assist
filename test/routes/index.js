@@ -1,4 +1,4 @@
-var stackato = require('../lib/index');
+var stackato = require('stackato-assist');
 
 /*
  * GET index page.

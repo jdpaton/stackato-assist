@@ -1,6 +1,6 @@
 {
   "name": "stackato-assist",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A utility library for easy assistance in getting your node app running on Stackato.",
   "main": "index.js",
   "directories": {
