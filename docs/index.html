@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head><title>README</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="./docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="./index.html" class="source"><span class="file_name">README</span></a><a href="./index.js.html" class="source "><span class="base_path">. / </span><span class="file_name">index.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"></th><th class="code"></th></tr></thead><tbody><tr id="section"><td class="docs"><h1><a href="https://github.com/jdpaton/stackato-assist">stackato-assist
-</a></h1><p>A utility library for easy assistance in getting your node app running on Stackato.</p><h3>Version</h3><p>0.0.2</p><h3>Author</h3><p>Jamie Paton</p><h3>Dependencies </h3><ul><li><b>mongodb </b><span>1.1.11</span></li></ul><p><h3>Stats</h3><pre class="code_stats">
-http://cloc.sourceforge.net v 1.55  T=0.5 s (2.0 files/s, 182.0 lines/s)
+</a></h1><p>A utility library for easy assistance in getting your node app running on Stackato.</p><h3>Version</h3><p>0.0.2</p><h3>Author</h3><p>Jamie Paton</p><h3>Dependencies </h3><ul><li><b>mongodb </b><span>1.1.11</span></li><li><b>redis </b><span>0.8.2</span></li></ul><p><h3>Stats</h3><pre class="code_stats">
+http://cloc.sourceforge.net v 1.55  T=0.5 s (2.0 files/s, 278.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Javascript                       1             21             10             60
+Javascript                       1             27             23             89
 -------------------------------------------------------------------------------
 </pre></p></td><td id="content" class="code"><h1>Stackato-Assist</h1>
 
@@ -53,8 +53,15 @@ if(stackato.isStackato){
 
   // Group for this app
   stackato.app.group
+</code></pre>
 
-  // Database services
+<h2>Services and database connection providers</h2>
+
+<p>Stackato-assist can easily provide database connections by only passing
+in the service name you gave when creating the service, or as defined in
+stackato.yml:</p>
+
+<pre><code>  // Database services
   // -----------------
 
   // true / false
@@ -62,6 +69,14 @@ if(stackato.isStackato){
   stackato.hasRedis
   stackato.hasMySQL
   stackato.hasPostgreSQL
+
+  // Get a service by name
+  // ---------------------
+  stackato.getService('myMongodb1', function(err, service){
+      console.log(service.host);
+      console.log(service.db);
+      // ... //
+  });
 
   // Persistent Filesystem service
   // -----------------------------
@@ -71,7 +86,14 @@ if(stackato.isStackato){
   // MongoDB connection helper
   // -------------------------
   stackato.connectMongoDB('serviceName', function(err, client){
-    //client.collection(...)
+      //client.collection(...)
+  });
+
+  // Redis connection helper
+  // -------------------------
+  stackato.connectRedis('serviceName', function(err, client){
+      //client.set("string key", "string val", redis.print);
+      // ...
   });
 }
-</code></pre>  </td></tr></tbody></table><div id="generated">generated Sat Nov 17 2012 23:13:23 GMT-0800 (PST)  </div><div id="projectname"><a href="./index.html">Stackato-Assist</a></div></div></body></html>
+</code></pre>  </td></tr></tbody></table><div id="generated">generated Sun Nov 18 2012 01:01:49 GMT-0800 (PST)  </div><div id="projectname"><a href="./index.html">Stackato-Assist</a></div></div></body></html>

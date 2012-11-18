@@ -1,6 +1,7 @@
 var mongodb = require('mongodb');
+var redis = require("redis");
 
-
+/* Utility functions */
 function has (obj, key) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
@@ -58,18 +59,35 @@ var Stackato = function(opts){
 
 };
 
+/*  getService: Get a service by name
+
+    Returns the service object in JSON
+    if it exists, otherwise returns null
+
+    @servicename = the user derived service name
+    @cb = the callback function (err, service)
+*/
+
+Stackato.prototype.getService = function(serviceName, cb){
+    if(has(this.services, serviceName)){
+        return cb(null, this.services[serviceName]);
+    }else{
+        return cb(null, null);
+    }
+}
+
 /* MongoDB connection helper
 
    Uses the native mongodb driver.
 
-   @servicename = the user derived servicename specified in the stackato.yml
+   @servicename = the user derived service name specified in the stackato.yml
    @opts = mongodb connection parameters (optional)
-   @cb = the callback function when a connection has been attempted
+   @cb = the callback function when a connection has been attempted (err, client)
 */
 Stackato.prototype.connectMongoDB = function(serviceName, opts, cb) {
     if(opts instanceof Function) {
         cb = opts;
-        opts = {};
+        opts = {safe:false};
     }
     if(!cb){
         return new Error('Second argument must be callback function')
@@ -88,4 +106,34 @@ Stackato.prototype.connectMongoDB = function(serviceName, opts, cb) {
     }
 };
 
+/* Redis connection helper
+
+   Uses the ubiquitous node_redis driver: https://github.com/mranney/node_redis
+
+   @servicename = the user derived servicename specified in the stackato.yml
+   @opts = node_redis createConnection() parameters (optional)
+   @cb = the callback function when a connection has been attempted (err, client)
+*/
+Stackato.prototype.connectRedis = function(serviceName, opts, cb) {
+
+    if(opts instanceof Function) {
+        cb = opts;
+        opts = {};
+    }
+    if(!cb){
+        return new Error('Second argument must be callback function')
+    }
+    if(!serviceName){
+        return cb(new Error('Service name not specified'));
+    }
+    if (has(this.services, serviceName)){
+        var client = redis.createClient(this.services[serviceName].port, this.services[serviceName].host, opts);
+        client.on('error', function(err){
+            cb(err);
+        });
+        client.auth(this.services[serviceName].password, function(){
+            return cb(null, client);
+        });
+    };
+};
 module.exports = new Stackato()

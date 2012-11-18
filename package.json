@@ -1,6 +1,6 @@
 {
   "name": "stackato-assist",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A utility library for easy assistance in getting your node app running on Stackato.",
   "main": "index.js",
   "directories": {
@@ -8,13 +8,14 @@
     "test": "test"
   },
   "dependencies": {
-    "mongodb": "1.1.11"
+    "mongodb": "1.1.11",
+    "redis": "0.8.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "https://github.com/jdpaton/stackato-assist.git",
-  "homepage": "https://github.com/jdpaton/stackato-assist",
+  "homepage": "http://jdpaton.github.com/stackato-assist",
   "keywords": [
     "Stackato",
     "PaaS",

@@ -9,6 +9,7 @@
     "express": "3.0.0",
     "jade": "*",
     "stackato-assist": "*",
-    "mongodb": "*"
+    "mongodb": "1.1.11",
+    "redis": "0.8.2"
   }
 }
