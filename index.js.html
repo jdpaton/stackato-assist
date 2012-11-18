@@ -1,15 +1,14 @@
 <!DOCTYPE html><html><head><title>index.js</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="./docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="./index.html" class="source"><span class="file_name">README</span></a><a href="./index.js.html" class="source selected"><span class="base_path">. / </span><span class="file_name">index.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>index.js</h1><div class="filepath">./</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div>
 </td><td class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mongodb</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">);</span>
-
-
-<span class="kd">function</span> <span class="nx">has</span> <span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">var</span> <span class="nx">redis</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;redis&quot;</span><span class="p">);</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Utility functions</p></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">has</span> <span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>
 <span class="p">}</span>
 
 
 <span class="kd">var</span> <span class="nx">Stackato</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">opts</span><span class="p">){</span>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">isStackato</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">STACKATO_APP_NAME</span><span class="p">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Application environment helpers</p>
+    <span class="k">this</span><span class="p">.</span><span class="nx">isStackato</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">STACKATO_APP_NAME</span><span class="p">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Application environment helpers</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">this</span><span class="p">.</span><span class="nx">port</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span><span class="p">)</span> <span class="o">?</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">:</span> <span class="kc">null</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">host</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">VCAP_APP_HOST</span><span class="p">)</span> <span class="o">?</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">VCAP_APP_HOST</span> <span class="o">:</span> <span class="kc">null</span><span class="p">;</span>
 
@@ -23,7 +22,7 @@
         <span class="k">this</span><span class="p">.</span><span class="nx">sudo</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">instance</span><span class="p">.</span><span class="nx">sudo</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">instanceID</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">instance</span><span class="p">.</span><span class="nx">instance_id</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">uris</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">instance</span><span class="p">.</span><span class="nx">uris</span><span class="p">;</span>
-    <span class="p">}</span></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>Helpers for database services</p>
+    <span class="p">}</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Helpers for database services</p>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">this</span><span class="p">.</span><span class="nx">hasMongoDB</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MONGODB_URL</span><span class="p">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">hasRedis</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">REDIS_URL</span><span class="p">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">hasMySQL</span> <span class="o">=</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MYSQL_URL</span><span class="p">)</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span>
@@ -39,7 +38,7 @@
 
         <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">){</span>
 
-            <span class="k">for</span><span class="p">(</span><span class="nx">service</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">){</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>If more than one of any database type
+            <span class="k">for</span><span class="p">(</span><span class="nx">service</span> <span class="k">in</span> <span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">){</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>If more than one of any database type
 <db*>_URL env is unset</p>
 </td><td class="code"><div class="highlight"><pre>                <span class="k">if</span><span class="p">(</span><span class="nx">service</span> <span class="o">==</span> <span class="s1">&#39;mongodb&#39;</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">hasMongoDB</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
                 <span class="k">if</span><span class="p">(</span><span class="nx">service</span> <span class="o">==</span> <span class="s1">&#39;redis&#39;</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">hasRedis</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
@@ -51,13 +50,25 @@
         <span class="p">}</span>
     <span class="p">}</span>
 
-<span class="p">};</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>MongoDB connection helper</p></div><div class="body"><p>Uses the native mongodb driver.</p>
+<span class="p">};</span></pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>getService: Get a service by name</p></div><div class="body"><pre><code>Returns the service object in JSON
+if it exists, otherwise returns null
 
-<p>@servicename = the user derived servicename specified in the stackato.yml<br />   @opts = mongodb connection parameters (optional)<br />   @cb = the callback function when a connection has been attempted</p></div></div>
+@servicename = the user derived service name
+@cb = the callback function (err, service)
+</code></pre></div></div>
+</td><td class="code"><div class="highlight"><pre><span class="nx">Stackato</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getService</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">,</span> <span class="nx">cb</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">has</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">,</span> <span class="nx">serviceName</span><span class="p">)){</span>
+        <span class="k">return</span> <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">[</span><span class="nx">serviceName</span><span class="p">]);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>MongoDB connection helper</p></div><div class="body"><p>Uses the native mongodb driver.</p>
+
+<p>@servicename = the user derived service name specified in the stackato.yml<br />   @opts = mongodb connection parameters (optional)<br />   @cb = the callback function when a connection has been attempted (err, client)</p></div></div>
 </td><td class="code"><div class="highlight"><pre><span class="nx">Stackato</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connectMongoDB</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">,</span> <span class="nx">opts</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">opts</span> <span class="k">instanceof</span> <span class="nb">Function</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">cb</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">;</span>
-        <span class="nx">opts</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span><span class="nx">safe</span><span class="o">:</span><span class="kc">false</span><span class="p">};</span>
     <span class="p">}</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">cb</span><span class="p">){</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Second argument must be callback function&#39;</span><span class="p">)</span>
@@ -74,8 +85,31 @@
     <span class="p">}</span><span class="k">else</span><span class="p">{</span>
         <span class="nx">cb</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Cannot find a service named: &#39;</span> <span class="o">+</span> <span class="nx">serviceName</span><span class="p">));</span>
     <span class="p">}</span>
-<span class="p">};</span>
+<span class="p">};</span></pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>Redis connection helper</p></div><div class="body"><p>Uses the ubiquitous node_redis driver: <a href='https://github.com/mranney/node_redis'>https://github.com/mranney/node_redis</a></p>
 
+<p>@servicename = the user derived servicename specified in the stackato.yml<br />   @opts = node_redis createConnection() parameters (optional)<br />   @cb = the callback function when a connection has been attempted (err, client)</p></div></div>
+</td><td class="code"><div class="highlight"><pre><span class="nx">Stackato</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connectRedis</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">serviceName</span><span class="p">,</span> <span class="nx">opts</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">opts</span> <span class="k">instanceof</span> <span class="nb">Function</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">cb</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">;</span>
+        <span class="nx">opts</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">cb</span><span class="p">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Second argument must be callback function&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">serviceName</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">cb</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Service name not specified&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">has</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">,</span> <span class="nx">serviceName</span><span class="p">)){</span>
+        <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">[</span><span class="nx">serviceName</span><span class="p">].</span><span class="nx">port</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">[</span><span class="nx">serviceName</span><span class="p">].</span><span class="nx">host</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+            <span class="nx">cb</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+        <span class="p">});</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">services</span><span class="p">[</span><span class="nx">serviceName</span><span class="p">].</span><span class="nx">password</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+            <span class="k">return</span> <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">client</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+<span class="p">};</span>
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Stackato</span><span class="p">()</span>
 
-</pre></div></td></tr></tbody></table><div id="generated">generated Sat Nov 17 2012 23:13:23 GMT-0800 (PST)  </div><div id="projectname"><a href="./index.html">Stackato-Assist</a></div></div></body></html>
+</pre></div></td></tr></tbody></table><div id="generated">generated Sun Nov 18 2012 01:01:49 GMT-0800 (PST)  </div><div id="projectname"><a href="./index.html">Stackato-Assist</a></div></div></body></html>
