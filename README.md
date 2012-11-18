@@ -85,4 +85,21 @@ stackato.yml:
           //client.set("string key", "string val", redis.print);
           // ...
       });
-    }
+
+      // PostgreSQL connection helper
+      // -------------------------
+      if(stackato.hasPostgreSQL){
+        stackato.connectPostgreSQL('x3p', function(err, client, pg){
+          client.query("SELECT NOW() as when", function(err, result) {
+            console.log("Row count: %d",result.rows.length);  // 1
+            console.log("Current year: %d", result.rows[0].when.getFullYear());
+
+            pg.connect(function(err, clientTwo){
+              // clientTwo.query(...) a new client object using connection params already set
+              // by stackato-assist
+            });
+
+            //pg.end(); //terminate the client pool, disconnecting all clients
+          });
+        });
+      }

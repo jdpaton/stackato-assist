@@ -1,5 +1,6 @@
 var mongodb = require('mongodb');
 var redis = require("redis");
+var pg = require('pg');
 
 /* Utility functions */
 function has (obj, key) {
@@ -90,7 +91,7 @@ Stackato.prototype.connectMongoDB = function(serviceName, opts, cb) {
         opts = {safe:false};
     }
     if(!cb){
-        return new Error('Second argument must be callback function')
+        return new Error('Last argument must be callback function')
     }
     if(!serviceName){
         return cb(new Error('Service name not specified'));
@@ -121,7 +122,7 @@ Stackato.prototype.connectRedis = function(serviceName, opts, cb) {
         opts = {};
     }
     if(!cb){
-        return new Error('Second argument must be callback function')
+        return new Error('Last argument must be callback function')
     }
     if(!serviceName){
         return cb(new Error('Service name not specified'));
@@ -134,6 +135,49 @@ Stackato.prototype.connectRedis = function(serviceName, opts, cb) {
         client.auth(this.services[serviceName].password, function(){
             return cb(null, client);
         });
-    };
+    }else{
+        cb(new Error('Cannot find a service named: ' + serviceName));
+    }
 };
+
+
+/* PostgreSQL connection helper
+
+   Uses the de facto node-postgres driver: https://github.com/brianc/node-postgres
+
+   @servicename = the user derived servicename specified in the stackato.yml
+   @opts = node_redis createConnection() parameters (optional)
+   @cb = the callback function when a connection has been attempted (err, client, node-postgres [object])
+*/
+Stackato.prototype.connectPostgreSQL = function(serviceName, opts, cb) {
+
+    if(opts instanceof Function) {
+        cb = opts;
+        opts = {};
+    }
+    if(!cb){
+        return new Error('Last argument must be callback function')
+    }
+    if(!serviceName){
+        return cb(new Error('Service name not specified'));
+    }
+    if (has(this.services, serviceName)){
+
+        // make the pg object re-usable in the callback
+        // by specifying the default connection params
+        pg.defaults.host = this.services[serviceName].host;
+        pg.defaults.port = this.services[serviceName].port;
+        pg.defaults.user = this.services[serviceName].user;
+        pg.defaults.password = this.services[serviceName].password;
+        pg.defaults.database = this.services[serviceName].name;
+
+        pg.connect(function(err, client){
+            cb(err, client, pg);
+        });
+
+    }else{
+        cb(new Error('Cannot find a service named: ' + serviceName));
+    }
+};
+
 module.exports = new Stackato()

@@ -8,6 +8,7 @@ framework:
 services:
   x1: mongodb
   x2: redis
+  x3p: postgresql
 
 ignores: ['node_modules']
 
