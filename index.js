@@ -1,3 +1,11 @@
+var mongodb = require('mongodb');
+
+
+function has (obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+
 var Stackato = function(opts){
 
     this.isStackato = (process.env.STACKATO_APP_NAME) ? true : false;
@@ -48,9 +56,36 @@ var Stackato = function(opts){
         }
     }
 
-    // TODO
-    // Database auto connection helpers
+};
 
+/* MongoDB connection helper
+
+   Uses the native mongodb driver.
+
+   @servicename = the user derived servicename specified in the stackato.yml
+   @opts = mongodb connection parameters (optional)
+   @cb = the callback function when a connection has been attempted
+*/
+Stackato.prototype.connectMongoDB = function(serviceName, opts, cb) {
+    if(opts instanceof Function) {
+        cb = opts;
+        opts = {};
+    }
+    if(!cb){
+        return new Error('Second argument must be callback function')
+    }
+    if(!serviceName){
+        return cb(new Error('Service name not specified'));
+    }
+    if (has(this.services, serviceName)){
+        var server = new mongodb.Server(this.services[serviceName].host, this.services[serviceName].port, opts);
+        new mongodb.Db(this.services[serviceName].db, server, opts).open(function (error, client) {
+            cb(error, client);
+        });
+
+    }else{
+        cb(new Error('Cannot find a service named: ' + serviceName));
+    }
 };
 
 module.exports = new Stackato()

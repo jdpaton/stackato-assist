@@ -56,6 +56,8 @@ or add to your package.json dependencies.
       stackato.hasFileSystem // true/false
       stackato.fileSystemPath // /path/to/fs
 
-
-
+      // MongoDB connection helper
+      stackato.connectMongoDB('serviceName', function(err, client){
+        //client.collection(...)
+      });
     }

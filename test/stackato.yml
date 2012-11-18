@@ -5,5 +5,8 @@ mem: 128
 framework:
   type: node
 
+services:
+  x1: mongodb
+
 ignores: ['node_modules']
 
