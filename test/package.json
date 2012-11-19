@@ -11,6 +11,7 @@
     "stackato-assist": "*",
     "mongodb": "1.1.11",
     "redis": "0.8.2",
-    "pg": "0.8.7"
+    "pg": "0.8.7",
+    "mysql": "2.0.0-alpha4"
   }
 }

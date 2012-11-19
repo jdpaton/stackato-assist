@@ -20,6 +20,15 @@ exports.index = function(req, res){
     });
   }
 
+  if(stackato.hasMySQL){
+    stackato.connectMySQL('x4m', function(err, conn){
+      conn.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+        if (err) throw err;
+         console.log('The solution is: ', rows[0].solution);
+      });
+    });
+  }
+
   if(stackato.hasPostgreSQL){
     stackato.connectPostgreSQL('x3p', function(err, client, pg){
       client.query("SELECT NOW() as when", function(err, result) {

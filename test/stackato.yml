@@ -9,6 +9,7 @@ services:
   x1: mongodb
   x2: redis
   x3p: postgresql
+  x4m: mysql
 
 ignores: ['node_modules']
 

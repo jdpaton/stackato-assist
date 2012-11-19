@@ -1,4 +1,5 @@
 var mongodb = require('mongodb');
+var mysql = require('mysql');
 var redis = require("redis");
 var pg = require('pg');
 
@@ -79,7 +80,9 @@ Stackato.prototype.getService = function(serviceName, cb){
 
 /* MongoDB connection helper
 
-   Uses the native mongodb driver.
+   Uses the native mongodb driver:
+
+   https://github.com/mongodb/node-mongodb-native
 
    @servicename = the user derived service name specified in the stackato.yml
    @opts = mongodb connection parameters (optional)
@@ -146,7 +149,7 @@ Stackato.prototype.connectRedis = function(serviceName, opts, cb) {
    Uses the de facto node-postgres driver: https://github.com/brianc/node-postgres
 
    @servicename = the user derived servicename specified in the stackato.yml
-   @opts = node_redis createConnection() parameters (optional)
+   @opts = pg defaults parameters (optional)
    @cb = the callback function when a connection has been attempted (err, client, node-postgres [object])
 */
 Stackato.prototype.connectPostgreSQL = function(serviceName, opts, cb) {
@@ -174,6 +177,45 @@ Stackato.prototype.connectPostgreSQL = function(serviceName, opts, cb) {
         pg.connect(function(err, client){
             cb(err, client, pg);
         });
+
+    }else{
+        cb(new Error('Cannot find a service named: ' + serviceName));
+    }
+};
+
+/* MySQL connection helper
+
+   Uses the currently active mysql driver: https://github.com/felixge/node-mysql
+
+   @servicename = the user derived servicename specified in the stackato.yml
+   @opts = `mysql` default parameters (optional)
+   @cb = the callback function when a connection has been attempted (err, connection [object])
+*/
+Stackato.prototype.connectMySQL = function(serviceName, opts, cb) {
+
+    if(opts instanceof Function) {
+        cb = opts;
+        opts = {};
+    }
+    if(!cb){
+        return new Error('Last argument must be callback function')
+    }
+    if(!serviceName){
+        return cb(new Error('Service name not specified'));
+    }
+    if (has(this.services, serviceName)){
+
+        var connection = mysql.createConnection({
+          host     : this.services[serviceName].host,
+          port     : this.services[serviceName].port,
+          user     : this.services[serviceName].user,
+          password : this.services[serviceName].password,
+          database : this.services[serviceName].name
+        });
+
+        connection.connect();
+
+        cb(null, connection);
 
     }else{
         cb(new Error('Cannot find a service named: ' + serviceName));
