@@ -34,6 +34,9 @@ var Stackato = function(opts){
     this.hasRedis = (process.env.REDIS_URL) ? true : false;
     this.hasMySQL = (process.env.MYSQL_URL) ? true : false;
     this.hasPostgreSQL = (process.env.POSTGRESQL_URL) ? true : false;
+    this.hasHarbor = (process.env.STACKATO_HARBOR) ? true : false;
+    if(this.hasHarbor) this.harborPort = process.env.STACKATO_HARBOR;
+
     if(process.env.STACKATO_FILESYSTEM) {
         this.hasFileSystem = true;
         this.fileSystemPath = process.env.STACKATO_FILESYSTEM;
@@ -54,6 +57,7 @@ var Stackato = function(opts){
                 if(service == 'mysql') this.hasMySQL = true;
                 if(service == 'postgresql') this.hasPostgreSQL = true;
                 if(service == 'filesystem') this.hasFileSystem = true;
+                if(service == 'harbor') this.hasHarbor = true;
 
             }
         }

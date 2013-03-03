@@ -73,6 +73,11 @@ stackato.yml:
       stackato.hasFileSystem // true/false
       stackato.fileSystemPath // /path/to/fs
 
+      // Harbor external port service
+      // ----------------------------
+      stackato.hasHarbor // true/false
+      stackato.harborPort // port #
+
       // MongoDB connection helper
       // -------------------------
       stackato.connectMongoDB('serviceName', function(err, client){
