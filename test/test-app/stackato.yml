@@ -10,6 +10,7 @@ services:
   x2: redis
   x3p: postgresql
   x4m: mysql
+  x5h: harbor
 
 ignores: ['node_modules']
 

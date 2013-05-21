@@ -1,3 +1,4 @@
+var assert   = require('assert');
 var stackato = require('../lib/index');
 
 /*
@@ -7,10 +8,15 @@ var stackato = require('../lib/index');
 exports.index = function(req, res){
   if(stackato.hasMongoDB){
     stackato.getService('x1', function(err, service){
-      //console.log(service);
+      assert(service);
     });
     stackato.connectMongoDB('x1', function(err, client){
-      //console.error(err);
+      assert(err === null);
+      assert(client);
+      client.createCollection('test_custom_key', function(err, collection) {
+        assert(err === null);
+        assert(collection);
+      });
     });
   }
 

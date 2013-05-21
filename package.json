@@ -13,6 +13,9 @@
     "pg": "0.8.7",
     "mysql": "2.0.0-alpha4"
   },
+  "devDependencies": {
+    "mocha": "1.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
